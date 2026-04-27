@@ -1,0 +1,65 @@
+{
+  "entities": {
+    "Invoice": {
+      "title": "Invoice Record",
+      "description": "A consolidated record of an invoice or employee claim from OCR processing.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "fileName": { "type": "string" },
+        "fileUrl": { "type": "string" },
+        "uploadedAt": { "type": "number", "description": "Timestamp" },
+        "processedAt": { "type": "number", "description": "Timestamp" },
+        "processingStatus": { "type": "string", "enum": ["Processing", "Success", "Failed"] },
+        "invoiceNumber": { "type": "string" },
+        "invoiceDate": { "type": "string" },
+        "supplierName": { "type": "string" },
+        "supplierVatNumber": { "type": "string" },
+        "customerName": { "type": "string" },
+        "currency": { "type": "string" },
+        "subtotal": { "type": "number" },
+        "vatAmount": { "type": "number" },
+        "grandTotal": { "type": "number" },
+        "expenseCategory": { "type": "string" },
+        "paidBy": { "type": "string" },
+        "employeeName": { "type": "string" },
+        "employeeId": { "type": "string" },
+        "department": { "type": "string" },
+        "claimStatus": { "type": "string" },
+        "approvalStatus": { "type": "string" },
+        "validationStatus": { "type": "string" },
+        "notes": { "type": "string" },
+        "lineItems": {
+            "type": "array",
+            "items": { "type": "object" }
+        },
+        "ocrRawData": { "type": "object" },
+        "updatedAt": { "type": "number", "description": "Timestamp" }
+      },
+      "required": ["fileName", "uploadedAt"]
+    },
+    "AuditLog": {
+       "title": "Audit Log",
+       "description": "Log of user actions, e.g., editing an invoice.",
+       "type": "object",
+       "properties": {
+          "action": { "type": "string" },
+          "invoiceId": { "type": "string" },
+          "userId": { "type": "string" },
+          "changes": { "type": "object" },
+          "createdAt": { "type": "number" }
+       },
+       "required": ["action", "invoiceId", "userId", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/invoices/{invoiceId}": {
+      "schema": { "$ref": "#/entities/Invoice" },
+      "description": "Stores all processed invoices and claims."
+    },
+    "/auditLogs/{logId}": {
+      "schema": { "$ref": "#/entities/AuditLog" },
+      "description": "Stores edits and actions on invoices."
+    }
+  }
+}
