@@ -3,6 +3,22 @@ import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 
+// Catch errors before React mounts (module-level crashes, Firebase init failures)
+window.addEventListener('error', (e) => {
+  const root = document.getElementById('root');
+  if (root && root.childElementCount === 0) {
+    root.innerHTML = `
+      <div style="height:100vh;display:flex;align-items:center;justify-content:center;background:#f8fafc;font-family:sans-serif">
+        <div style="text-align:center;max-width:480px;padding:2rem">
+          <h1 style="color:#1e293b;font-size:1.25rem;margin-bottom:.5rem">Application Error</h1>
+          <p style="color:#64748b;font-size:.875rem;margin-bottom:1rem">${e.message}</p>
+          <p style="color:#94a3b8;font-size:.75rem">Check that all environment variables are configured in Coolify.</p>
+          <button onclick="location.reload()" style="margin-top:1rem;padding:.5rem 1.25rem;background:#4f46e5;color:#fff;border:none;border-radius:.375rem;cursor:pointer;font-size:.875rem">Reload</button>
+        </div>
+      </div>`;
+  }
+});
+
 class ErrorBoundary extends Component<
   { children: ReactNode },
   { hasError: boolean; error: Error | null }
