@@ -9,7 +9,7 @@ import { PDFDocument, rgb } from 'pdf-lib';
 import { db, storage, auth } from './firebase';
 import { collection, doc, addDoc, updateDoc, onSnapshot, query, orderBy, deleteDoc, getDocs, where } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { GoogleAuthProvider, signInWithPopup, signOut, User } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut, User } from 'firebase/auth';
 import type { FirestoreInvoice, UploadState } from './types';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
@@ -60,8 +60,8 @@ export default function App() {
   const [sessionStartTime] = useState(Date.now());
 
   useEffect(() => {
+    getRedirectResult(auth).catch(() => {});
     const unsubAuth = auth.onAuthStateChanged(u => setUser(u));
-    // Listen to Firebase real-time
     const q = query(collection(db, 'invoices'), orderBy('uploadedAt', 'desc'));
     const unsub = onSnapshot(q, (snap) => {
       const data: FirestoreInvoice[] = [];
@@ -540,7 +540,7 @@ Rules:
               <button onClick={() => signOut(auth)} className="text-xs px-3 py-1.5 bg-slate-100 text-slate-600 rounded font-semibold hover:bg-slate-200">Sign Out</button>
             </div>
           ) : (
-            <button onClick={() => signInWithPopup(auth, new GoogleAuthProvider())} className="text-xs px-4 py-1.5 bg-indigo-600 justify-center text-white rounded-md font-semibold hover:bg-indigo-700 flex items-center gap-2">
+            <button onClick={() => signInWithRedirect(auth, new GoogleAuthProvider())} className="text-xs px-4 py-1.5 bg-indigo-600 justify-center text-white rounded-md font-semibold hover:bg-indigo-700 flex items-center gap-2">
               Sign In
             </button>
           )}
