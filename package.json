@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --port=5173 --host=0.0.0.0",
     "build": "vite build",
+    "start": "serve dist -s -l 3000",
     "preview": "vite preview",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit"
@@ -23,6 +24,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-dropzone": "^15.0.0",
+    "serve": "^14.2.6",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
@@ -30,7 +32,6 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.21",
-    "serve": "^14.2.6",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",
     "typescript": "~5.8.2",
