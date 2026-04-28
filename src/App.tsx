@@ -18,7 +18,7 @@ if (!GEMINI_API_KEY) {
 }
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
-const COMPANIES = ['IST Real Estate', 'IST Markets LTD', 'IST Security'] as const;
+const COMPANIES = ['IST Real Estate', 'IST Markets LTD', 'IST Securities'] as const;
 type Company = typeof COMPANIES[number];
 
 const isEmployeePaid = (method: string) => ['Employee Personal Account', 'Employee Cash', 'Employee Personal Card'].includes(method);
@@ -553,7 +553,7 @@ Rules:
   const companyColor = (company: string) => {
     if (company === 'IST Real Estate') return 'bg-blue-100 text-blue-700';
     if (company === 'IST Markets LTD') return 'bg-emerald-100 text-emerald-700';
-    if (company === 'IST Security') return 'bg-violet-100 text-violet-700';
+    if (company === 'IST Securities') return 'bg-violet-100 text-violet-700';
     return 'bg-slate-100 text-slate-500';
   };
 
@@ -856,7 +856,7 @@ function CompanyPickerModal({ fileCount, onConfirm, onCancel }: {
   const companyStyles: Record<Company, { bg: string; border: string; text: string; icon: string }> = {
     'IST Real Estate': { bg: 'bg-blue-50', border: 'border-blue-400', text: 'text-blue-800', icon: 'bg-blue-100' },
     'IST Markets LTD': { bg: 'bg-emerald-50', border: 'border-emerald-400', text: 'text-emerald-800', icon: 'bg-emerald-100' },
-    'IST Security':    { bg: 'bg-violet-50', border: 'border-violet-400', text: 'text-violet-800', icon: 'bg-violet-100' },
+    'IST Securities':    { bg: 'bg-violet-50', border: 'border-violet-400', text: 'text-violet-800', icon: 'bg-violet-100' },
   };
 
   return (
