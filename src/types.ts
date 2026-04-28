@@ -7,6 +7,7 @@ export interface UploadState {
 
 export interface FirestoreInvoice {
   id: string; // Document ID
+  company: string;
   fileName: string;
   fileUrl: string;
   uploadedAt: number;
